@@ -1,4 +1,4 @@
-package functions.basic;
+package system.expressions.functions.basic;
 
 public class NaturalLogarithm {
 

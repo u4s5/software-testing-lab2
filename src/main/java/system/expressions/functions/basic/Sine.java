@@ -1,4 +1,4 @@
-package functions.basic;
+package system.expressions.functions.basic;
 
 public class Sine {
 
@@ -9,7 +9,7 @@ public class Sine {
         }
 
         if (Double.isNaN(arg)) {
-            return arg;
+            return Double.NaN;
         }
 
         arg = arg % (2 * Math.PI);
