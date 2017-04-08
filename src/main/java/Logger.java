@@ -3,7 +3,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.function.BiFunction;
-import java.util.function.BinaryOperator;
 import java.util.function.UnaryOperator;
 
 public class Logger {
