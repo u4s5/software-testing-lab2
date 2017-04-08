@@ -14,7 +14,12 @@ public class Cosine {
             return Double.NaN;
         }
 
-        return Math.sqrt(1 - Math.pow(Sine.calcSin(arg), 2));
+        double cos = Math.sqrt(1 - Math.pow(Sine.calcSin(arg), 2));
+        double mod = Math.abs(arg % (Math.PI * 2));
+        if (mod >= Math.PI / 2 && mod <= 3 * Math.PI / 2) {
+            cos = -cos;
+        }
+        return cos;
 
     }
 
