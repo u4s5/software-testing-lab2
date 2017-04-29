@@ -8,8 +8,6 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.modules.junit4.PowerMockRunnerDelegate;
 import system.expressions.functions.Cosecant;
-import system.expressions.functions.Cosine;
-import system.expressions.functions.Secant;
 import system.expressions.functions.basic.Sine;
 
 import java.util.Arrays;
