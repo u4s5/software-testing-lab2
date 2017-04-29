@@ -1,6 +1,5 @@
 package layer3;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -9,7 +8,6 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.modules.junit4.PowerMockRunnerDelegate;
-import system.expressions.functions.Cosecant;
 import system.expressions.functions.Cosine;
 import system.expressions.functions.Tangent;
 import system.expressions.functions.basic.Sine;
@@ -59,7 +57,6 @@ public class TangentTest {
         });
     }
 
-    @Before
     public void mockSine() {
         PowerMockito.mockStatic(Sine.class);
 
@@ -83,7 +80,6 @@ public class TangentTest {
         BDDMockito.given(Sine.calcSin(Math.PI / 3)).willReturn(0.866025);
     }
 
-    @Before
     public void mockCosine() {
         PowerMockito.mockStatic(Cosine.class);
 
@@ -108,7 +104,26 @@ public class TangentTest {
     }
 
     @Test
-    public void test() {
+    public void testTangentWithSinCosStubs() {
+        mockSine();
+        mockCosine();
+        if (expectedResult.isNaN())
+            assertTrue(message, Double.isNaN(Tangent.calcTan(arg)));
+        else
+            assertEquals(message, expectedResult, Tangent.calcTan(arg), DELTA);
+    }
+
+    @Test
+    public void testTangentWithCosStub() {
+        mockCosine();
+        if (expectedResult.isNaN())
+            assertTrue(message, Double.isNaN(Tangent.calcTan(arg)));
+        else
+            assertEquals(message, expectedResult, Tangent.calcTan(arg), DELTA);
+    }
+
+    @Test
+    public void testTangentWithoutStubs() {
         if (expectedResult.isNaN())
             assertTrue(message, Double.isNaN(Tangent.calcTan(arg)));
         else

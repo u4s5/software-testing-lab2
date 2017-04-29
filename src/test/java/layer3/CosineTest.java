@@ -1,6 +1,5 @@
 package layer3;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -72,7 +71,6 @@ public class CosineTest {
         });
     }
 
-    @Before
     public void mockSine() {
         PowerMockito.mockStatic(Sine.class);
 
@@ -112,7 +110,16 @@ public class CosineTest {
     }
 
     @Test
-    public void test() {
+    public void testCosineWithSineStub() {
+        mockSine();
+        if (expectedResult.isNaN())
+            assertTrue(message, Double.isNaN(Cosine.calcCos(arg)));
+        else
+            assertEquals(message, expectedResult, Cosine.calcCos(arg), DELTA);
+    }
+
+    @Test
+    public void testCosineWithoutStub() {
         if (expectedResult.isNaN())
             assertTrue(message, Double.isNaN(Cosine.calcCos(arg)));
         else

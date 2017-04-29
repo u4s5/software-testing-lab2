@@ -1,6 +1,5 @@
 package layer2;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -53,7 +52,6 @@ public class PositiveIntervalTest {
         });
     }
 
-    @Before
     public void mockNaturalLogarithm() {
         PowerMockito.mockStatic(NaturalLogarithm.class);
 
@@ -71,7 +69,6 @@ public class PositiveIntervalTest {
         BDDMockito.given(NaturalLogarithm.calcLn(100D)).willReturn(4.60517);
     }
 
-    @Before
     public void mockLogarithm() {
         PowerMockito.mockStatic(Logarithm.class);
 
@@ -132,7 +129,17 @@ public class PositiveIntervalTest {
     }
 
     @Test
-    public void test() {
+    public void testPositiveIntervalWithStubs() {
+        mockLogarithm();
+        mockNaturalLogarithm();
+        if (expectedResult.isNaN())
+            assertTrue(message, Double.isNaN(System.calc(arg)));
+        else
+            assertEquals(message, expectedResult, System.calc(arg), DELTA);
+    }
+
+    @Test
+    public void testPositiveIntervalWithoutStubs() {
         if (expectedResult.isNaN())
             assertTrue(message, Double.isNaN(System.calc(arg)));
         else

@@ -1,6 +1,5 @@
 package layer2;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -70,7 +69,6 @@ public class NegativeIntervalTest {
         });
     }
 
-    @Before
     public void mockSine() {
         PowerMockito.mockStatic(Sine.class);
 
@@ -104,7 +102,6 @@ public class NegativeIntervalTest {
         BDDMockito.given(Sine.calcSin(-15 * Math.PI / 8)).willReturn(0.382683);
     }
 
-    @Before
     public void mockCosine() {
         PowerMockito.mockStatic(Cosine.class);
 
@@ -138,7 +135,6 @@ public class NegativeIntervalTest {
         BDDMockito.given(Cosine.calcCos(-15 * Math.PI / 8)).willReturn(0.92388);
     }
 
-    @Before
     public void mockSecant() {
         PowerMockito.mockStatic(Secant.class);
 
@@ -172,7 +168,6 @@ public class NegativeIntervalTest {
         BDDMockito.given(Secant.calcSec(-15 * Math.PI / 8)).willReturn(1.08239);
     }
 
-    @Before
     public void mockCosecant() {
         PowerMockito.mockStatic(Cosecant.class);
 
@@ -206,7 +201,6 @@ public class NegativeIntervalTest {
         BDDMockito.given(Cosecant.calcCsc(-15 * Math.PI / 8)).willReturn(2.61313);
     }
 
-    @Before
     public void mockTangent() {
         PowerMockito.mockStatic(Tangent.class);
 
@@ -240,7 +234,6 @@ public class NegativeIntervalTest {
         BDDMockito.given(Tangent.calcTan(-15 * Math.PI / 8)).willReturn(0.414214);
     }
 
-    @Before
     public void mockCotangent() {
         PowerMockito.mockStatic(Cotangent.class);
 
@@ -275,7 +268,87 @@ public class NegativeIntervalTest {
     }
 
     @Test
-    public void test() {
+    public void testNegativeIntervalWithAllStubs() {
+        mockSine();
+        mockCosine();
+        mockTangent();
+        mockCotangent();
+        mockSecant();
+        mockCosecant();
+        if (expectedResult.isNaN())
+            assertTrue(message, Double.isNaN(System.calc(arg)));
+        else
+            assertEquals(message, expectedResult, NegativeInterval.calc(arg), DELTA);
+    }
+
+    @Test
+    public void testNegativeIntervalWithSinCosTanCotStubs() {
+        mockTangent();
+        mockCotangent();
+        mockSine();
+        mockCosine();
+        if (expectedResult.isNaN())
+            assertTrue(message, Double.isNaN(System.calc(arg)));
+        else
+            assertEquals(message, expectedResult, NegativeInterval.calc(arg), DELTA);
+    }
+
+    @Test
+    public void testNegativeIntervalWithSinCosSecCscStubs() {
+        mockSine();
+        mockCosine();
+        mockSecant();
+        mockCosecant();
+        if (expectedResult.isNaN())
+            assertTrue(message, Double.isNaN(System.calc(arg)));
+        else
+            assertEquals(message, expectedResult, NegativeInterval.calc(arg), DELTA);
+    }
+
+    @Test
+    public void testNegativeIntervalWithTanCotSecCscStubs() {
+        mockTangent();
+        mockCotangent();
+        mockSecant();
+        mockCosecant();
+        if (expectedResult.isNaN())
+            assertTrue(message, Double.isNaN(System.calc(arg)));
+        else
+            assertEquals(message, expectedResult, NegativeInterval.calc(arg), DELTA);
+    }
+
+    @Test
+    public void testNegativeIntervalWithSinCosStubs() {
+        mockSine();
+        mockCosine();
+        if (expectedResult.isNaN())
+            assertTrue(message, Double.isNaN(System.calc(arg)));
+        else
+            assertEquals(message, expectedResult, NegativeInterval.calc(arg), DELTA);
+    }
+
+    @Test
+    public void testNegativeIntervalWithTanCotStubs() {
+        mockTangent();
+        mockCotangent();
+        if (expectedResult.isNaN())
+            assertTrue(message, Double.isNaN(System.calc(arg)));
+        else
+            assertEquals(message, expectedResult, NegativeInterval.calc(arg), DELTA);
+    }
+
+    @Test
+    public void testNegativeIntervalWithSecCscStubs() {
+        mockSecant();
+        mockCosecant();
+        if (expectedResult.isNaN())
+            assertTrue(message, Double.isNaN(System.calc(arg)));
+        else
+            assertEquals(message, expectedResult, NegativeInterval.calc(arg), DELTA);
+    }
+
+    @Test
+    public void testNegativeIntervalWithoutStubs() {
         if (expectedResult.isNaN())
             assertTrue(message, Double.isNaN(System.calc(arg)));
         else

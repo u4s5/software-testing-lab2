@@ -1,6 +1,5 @@
 package layer3;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -58,7 +57,6 @@ public class CotangentTest {
         });
     }
 
-    @Before
     public void mockSine() {
         PowerMockito.mockStatic(Sine.class);
 
@@ -82,7 +80,6 @@ public class CotangentTest {
         BDDMockito.given(Sine.calcSin(11 * Math.PI / 16)).willReturn(0.83147);
     }
 
-    @Before
     public void mockCosine() {
         PowerMockito.mockStatic(Cosine.class);
 
@@ -107,7 +104,35 @@ public class CotangentTest {
     }
 
     @Test
-    public void test() {
+    public void testCotangentWithSinCosStubs() {
+        mockSine();
+        mockCosine();
+        if (expectedResult.isNaN())
+            assertTrue(message, Double.isNaN(Cotangent.calcCot(arg)));
+        else
+            assertEquals(message, expectedResult, Cotangent.calcCot(arg), DELTA);
+    }
+
+    @Test
+    public void testCotangentWithSinStub() {
+        mockSine();
+        if (expectedResult.isNaN())
+            assertTrue(message, Double.isNaN(Cotangent.calcCot(arg)));
+        else
+            assertEquals(message, expectedResult, Cotangent.calcCot(arg), DELTA);
+    }
+
+    @Test
+    public void testCotangentWithCosStub() {
+        mockCosine();
+        if (expectedResult.isNaN())
+            assertTrue(message, Double.isNaN(Cotangent.calcCot(arg)));
+        else
+            assertEquals(message, expectedResult, Cotangent.calcCot(arg), DELTA);
+    }
+
+    @Test
+    public void testCotangentWithoutStubs() {
         if (expectedResult.isNaN())
             assertTrue(message, Double.isNaN(Cotangent.calcCot(arg)));
         else

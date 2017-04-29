@@ -1,6 +1,5 @@
 package layer1;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -83,7 +82,6 @@ public class SystemTest {
         });
     }
 
-    @Before
     public void mockNegativeInterval() {
         PowerMockito.mockStatic(NegativeInterval.class);
 
@@ -117,7 +115,6 @@ public class SystemTest {
         BDDMockito.given(NegativeInterval.calc(-15 * Math.PI / 8)).willReturn(3.9314);
     }
 
-    @Before
     public void mockPositiveInterval() {
         PowerMockito.mockStatic(PositiveInterval.class);
 
@@ -136,7 +133,36 @@ public class SystemTest {
     }
 
     @Test
-    public void test() {
+    public void testSystemWithPositiveNegativeStubs() {
+        mockPositiveInterval();
+        mockNegativeInterval();
+        if (expectedResult.isNaN())
+            assertTrue(message, Double.isNaN(System.calc(arg)));
+        else
+            assertEquals(message, expectedResult, System.calc(arg), DELTA);
+    }
+
+    @Test
+    public void testSystemWithNegativeStub() {
+        mockNegativeInterval();
+        if (expectedResult.isNaN())
+            assertTrue(message, Double.isNaN(System.calc(arg)));
+        else
+            assertEquals(message, expectedResult, System.calc(arg), DELTA);
+    }
+
+    @Test
+    public void testSystemWithPositiveStub() {
+        mockPositiveInterval();
+        if (expectedResult.isNaN())
+            assertTrue(message, Double.isNaN(System.calc(arg)));
+        else
+            assertEquals(message, expectedResult, System.calc(arg), DELTA);
+    }
+
+    @Test
+    public void testSystemWithoutStubs() {
+        mockPositiveInterval();
         if (expectedResult.isNaN())
             assertTrue(message, Double.isNaN(System.calc(arg)));
         else
