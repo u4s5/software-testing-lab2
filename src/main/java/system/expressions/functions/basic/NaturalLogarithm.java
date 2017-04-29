@@ -11,7 +11,7 @@ public class NaturalLogarithm {
         }
 
         if (x == 0D) {
-            return Double.NEGATIVE_INFINITY;
+            return Double.NaN;
         }
 
         if (x == Double.POSITIVE_INFINITY) {

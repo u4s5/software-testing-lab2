@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import static org.testng.AssertJUnit.assertEquals;
+import static org.testng.AssertJUnit.assertTrue;
 
 @RunWith(PowerMockRunner.class)
 @PowerMockRunnerDelegate(value = Parameterized.class)
@@ -34,15 +35,15 @@ public class SystemTest {
     public static Collection<Object[]> parameters() {
         return Arrays.asList(new Object[][]{
 
-                {"Testing x = -pi", 0.5, -Math.PI},
+                {"Testing x = -pi", Double.NaN, -Math.PI},
                 {"Testing x = -pi - delta", 0.499999, -Math.PI - DELTA},
                 {"Testing x = -pi + delta", 0.499999, -Math.PI + DELTA},
 
-                {"Testing x = -pi/2", 0.5, -Math.PI / 2},
+                {"Testing x = -pi/2", Double.NaN, -Math.PI / 2},
                 {"Testing x = -pi/2 - delta", 0.49975, -Math.PI / 2 - DELTA},
                 {"Testing x = -pi/2 + delta", 0.50025, -Math.PI / 2 + DELTA},
 
-                {"Testing x = -3pi/2", 0.5, -3 * Math.PI / 2},
+                {"Testing x = -3pi/2", Double.NaN, -3 * Math.PI / 2},
                 {"Testing x = -3pi/2 - delta", 0.50025, -3 * Math.PI / 2 - DELTA},
                 {"Testing x = -3pi/2 + delta", 0.49975, -3 * Math.PI / 2 + DELTA},
 
@@ -64,7 +65,6 @@ public class SystemTest {
                 {"Testing x = -15pi/8", 3.9314, -15 * Math.PI / 8},
 
 
-
                 {"Testing x = 1", Double.NaN, 1D},
                 {"Testing x = 1 - delta", 1.16624, 1 - DELTA},
                 {"Testing x = 1 + delta", 1.16624, 1 + DELTA},
@@ -75,7 +75,7 @@ public class SystemTest {
                 {"Testing x = 0.1", 1.46193, 0.1},
                 {"Testing x = 0.75", 1.17085, 0.75},
 
-                {"Testing x = 5", 1.3107,5D},
+                {"Testing x = 5", 1.3107, 5D},
                 {"Testing x = 100000", 8.55861, 100000D}
 
         });
@@ -85,15 +85,15 @@ public class SystemTest {
     public void mockNegativeInterval() {
         PowerMockito.mockStatic(NegativeInterval.class);
 
-        BDDMockito.given(NegativeInterval.calc(-Math.PI)).willReturn(0.5);
+        BDDMockito.given(NegativeInterval.calc(-Math.PI)).willReturn(Double.NaN);
         BDDMockito.given(NegativeInterval.calc(-Math.PI - DELTA)).willReturn(0.499999);
         BDDMockito.given(NegativeInterval.calc(-Math.PI + DELTA)).willReturn(0.499999);
 
-        BDDMockito.given(NegativeInterval.calc(-Math.PI / 2)).willReturn(0.5);
+        BDDMockito.given(NegativeInterval.calc(-Math.PI / 2)).willReturn(Double.NaN);
         BDDMockito.given(NegativeInterval.calc(-Math.PI / 2 - DELTA)).willReturn(0.49975);
         BDDMockito.given(NegativeInterval.calc(-Math.PI / 2 + DELTA)).willReturn(0.50025);
 
-        BDDMockito.given(NegativeInterval.calc(-3 * Math.PI / 2)).willReturn(0.5);
+        BDDMockito.given(NegativeInterval.calc(-3 * Math.PI / 2)).willReturn(Double.NaN);
         BDDMockito.given(NegativeInterval.calc(-3 * Math.PI / 2 - DELTA)).willReturn(0.50025);
         BDDMockito.given(NegativeInterval.calc(-3 * Math.PI / 2 + DELTA)).willReturn(0.49975);
 
@@ -121,7 +121,7 @@ public class SystemTest {
 
         BDDMockito.given(PositiveInterval.calc(1D)).willReturn(Double.NaN);
         BDDMockito.given(PositiveInterval.calc(1 - DELTA)).willReturn(1.16624);
-        BDDMockito.given(PositiveInterval.calc(1+DELTA)).willReturn(1.16624);
+        BDDMockito.given(PositiveInterval.calc(1 + DELTA)).willReturn(1.16624);
 
         BDDMockito.given(PositiveInterval.calc(0D)).willReturn(Double.NaN);
         BDDMockito.given(PositiveInterval.calc(DELTA)).willReturn(3.82749);
@@ -135,7 +135,10 @@ public class SystemTest {
 
     @Test
     public void test() {
-        assertEquals(message, expectedResult, System.calc(arg), DELTA);
+        if (expectedResult.isNaN())
+            assertTrue(message, Double.isNaN(System.calc(arg)));
+        else
+            assertEquals(message, expectedResult, System.calc(arg), DELTA);
     }
 
 }
