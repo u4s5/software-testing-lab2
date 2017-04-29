@@ -1,6 +1,10 @@
 package system.expressions.functions.basic;
 
+import java.math.BigDecimal;
+
 public class Sine {
+
+    private static final int PRECISION = 12;
 
     public static double calcSin(double arg) {
 
@@ -22,7 +26,7 @@ public class Sine {
             sum += (~(i & 3) + 3) * (i & 1) * term;
         }
 
-        return sum;
+        return new BigDecimal(sum).setScale(PRECISION, BigDecimal.ROUND_HALF_UP).doubleValue();
 
     }
 
