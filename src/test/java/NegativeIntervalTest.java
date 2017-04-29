@@ -96,7 +96,7 @@ public class NegativeIntervalTest {
         BDDMockito.given(Sine.calcSin(-Math.PI / 8)).willReturn(-0.382683);
 
         BDDMockito.given(Sine.calcSin(-3 * Math.PI / 4)).willReturn(-0.707107);
-        BDDMockito.given(Sine.calcSin(-5 * Math.PI / 4)).willReturn(-0.707107);
+        BDDMockito.given(Sine.calcSin(-5 * Math.PI / 4)).willReturn(0.707107);
 
         BDDMockito.given(Sine.calcSin(-7 * Math.PI / 4)).willReturn(0.707107);
         BDDMockito.given(Sine.calcSin(-15 * Math.PI / 8)).willReturn(0.382683);
