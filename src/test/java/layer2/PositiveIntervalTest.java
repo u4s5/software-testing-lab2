@@ -41,7 +41,7 @@ public class PositiveIntervalTest {
                 {"Testing x = 1 + delta", 1.16624, 1 + DELTA},
 
                 {"Testing x = 0", Double.NaN, 0D},
-                {"Testing x = 0 + delta", 3.82749, DELTA},
+                {"Testing x = 0 + delta", Double.NaN, 0D},
 
                 {"Testing x = 0.1", 1.46193, 0.1},
                 {"Testing x = 0.75", 1.17085, 0.75},
